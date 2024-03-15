@@ -16,6 +16,7 @@ import SnacBar from "./Components/SnacBar.jsx";
 import BranchProtected from "./routeshandle/BranchProtected.jsx";
 import Coporate from "./Pages/coporate/Coporate.jsx";
 import History from "./Pages/history/History.jsx";
+import Manage from "./Pages/manage/Manage.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -54,6 +55,16 @@ const router = createBrowserRouter([
         <Nav />
         <History />
       </BranchProtected>
+    ),
+    errorElement: <div>error</div>,
+  },
+  {
+    path: "/manage",
+    element: (
+      <AdminProtected>
+        <Nav />
+        <Manage />
+      </AdminProtected>
     ),
     errorElement: <div>error</div>,
   },

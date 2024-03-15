@@ -69,15 +69,6 @@ export default function PackageTable({ packageData }) {
         <Typography variant="h6">
           Package ID: {row.getValue("package_id")}
         </Typography>
-        <DetailCard
-          detail={{
-            name: "Lahiru Shiran",
-            mobile: "0716320662",
-            address: "B125/2, 5th Floor, 1st Road, Colombo",
-          }}
-          iconColor={"gray"}
-          title={"Sender Details"}
-        />
       </div>
     ),
     muiExpandButtonProps: ({ row, table }) => ({

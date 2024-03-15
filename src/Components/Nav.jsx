@@ -65,9 +65,9 @@ export default function Nav() {
   ];
   const navmanage = [
     {
-      name: "Manage Employee",
+      name: "Manage",
       navIcon: <AdminPanelSettings />,
-      navPath: "/arm/employee_manage",
+      navPath: "/manage",
       access: ["admin"],
     },
   ];
@@ -165,7 +165,7 @@ export default function Nav() {
               )}
               <Divider />
 
-              {/* {value?.job_role === "admin" ? (
+              {userData?.job_role === "admin" ? (
                 <Typography sx={{ mx: 1 }} variant="subtitle1">
                   Manage ARM Air
                 </Typography>
@@ -175,23 +175,24 @@ export default function Nav() {
 
               {navmanage.map(
                 (e, index) =>
-                  e.access.includes(value?.job_role) && (
+                  e.access.includes(userData?.job_role) && (
                     <ListItem color="primary" key={e.name} disablePadding>
                       <Link to={e.navPath}>
                         <ListItemButton
                           sx={{
                             width: 250,
-                            backgroundColor: pathname === e.navPath && "black",
-                            color: pathname === e.navPath && "white",
+                            backgroundColor:
+                              location.pathname === e.navPath && "black",
+                            color: location.pathname === e.navPath && "white",
                             "&:hover": {
                               backgroundColor:
-                                pathname === e.navPath && "black", // Set to 'none' or any other value to prevent hover effect
+                                location.pathname === e.navPath && "black", // Set to 'none' or any other value to prevent hover effect
                             },
                           }}
                         >
                           <ListItemIcon
                             sx={{
-                              color: pathname === e.navPath && "white",
+                              color: location.pathname === e.navPath && "white",
                             }}
                           >
                             {e["navIcon"]}
@@ -201,7 +202,7 @@ export default function Nav() {
                       </Link>
                     </ListItem>
                   )
-              )}*/}
+              )}
             </List>
             <List>
               <ListItem

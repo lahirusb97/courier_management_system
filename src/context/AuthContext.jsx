@@ -43,27 +43,32 @@ export const AuthContextprovider = ({ children }) => {
       }
     });
   }, []);
+
   useEffect(() => {
     if (userData) {
-      const getCop = async () => {
-        const docRef = doc(getFirestore(), "data", "coporate");
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          const arrayData = Object.keys(docSnap.data().coporate).map((key) => {
+      const unsub = onSnapshot(doc(firestore, "data", "coporate"), (doc) => {
+        if (doc.exists()) {
+          const arrayData = Object.keys(doc.data().coporate).map((key) => {
             const cop_id = key;
-            const data = docSnap.data().coporate[key];
+            const data = doc.data().coporate[key];
             return { cop_id, ...data };
           });
           setCopArray(arrayData);
-          setCopObj(docSnap.data().coporate);
+          setCopObj(doc.data().coporate);
         } else {
           setCopArray([]);
           setCopObj({});
         }
-      };
-      getCop();
+      });
 
+      return () => {
+        unsub();
+      };
+    }
+  }, [userData]);
+
+  useEffect(() => {
+    if (userData) {
       if (userData.job_role === "admin") {
         const getBranch = async () => {
           const userRef = collection(getFirestore(), "user");

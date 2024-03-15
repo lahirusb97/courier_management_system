@@ -30,7 +30,7 @@ export default function RiderTrack({ detail, iconColor, title, index }) {
               color="text.secondary"
               gutterBottom
             >
-              {detail.ariea}
+              {detail.area}
             </Typography>
           </div>
           <div className="flex gap-2 items-center justify-between">
