@@ -5,7 +5,7 @@ import { CircularProgress } from "@mui/material";
 
 export default function RiderProtected({ children }) {
   const { userData, loading, error } = UserAuth();
-
+  console.log(userData, loading);
   if (loading) {
     return (
       <div className="flex h-screen w-screen justify-center items-center">
@@ -21,7 +21,7 @@ export default function RiderProtected({ children }) {
       ) {
         return children;
       } else {
-        return <Navigate to={"/login"} />;
+        return <Navigate to={"/"} />;
       }
     } else {
       return <Navigate to={"/login"} />;

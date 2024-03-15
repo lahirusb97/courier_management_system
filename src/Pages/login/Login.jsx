@@ -22,22 +22,11 @@ export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("armairexpressdb@gmail.com");
+  const [email, setEmail] = useState("lahirushirant@gmail.com");
   const [password, setPassword] = useState("qwertyu");
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
 
-  useEffect(() => {
-    if (error) {
-      dispatch(openScackbar({ open: true, type: "error", msg: error.message }));
-    }
-    if (!loading && user) {
-      navigate("/", { replace: true });
-      dispatch(
-        openScackbar({ open: true, type: "success", msg: "Login success" })
-      );
-    }
-  }, [error, dispatch, loading, user]);
   if (loading) {
     return (
       <div className="flex min-h-screen justify-center items-center">
@@ -69,8 +58,8 @@ export default function Login() {
           animate="animate"
           transition={{ duration: 0.2 }}
         >
-          <Typography fontWeight={600} color={"GrayText"} variant="h4">
-            ARM Air Express
+          <Typography fontWeight={600} color={"GrayText"} variant="h5">
+            Delivery Management & Tracking System
           </Typography>
         </motion.div>
         <motion.div
@@ -119,7 +108,6 @@ export default function Login() {
                     msg: `Email Reset sent to ${email} check your inbox`,
                   })
                 );
-                navigate("/", { replace: true });
               })
               .catch((error) => {
                 dispatch(
@@ -154,7 +142,18 @@ export default function Login() {
         >
           <Button
             fullWidth
-            onClick={() => signInWithEmailAndPassword(email, password)}
+            onClick={() => {
+              signInWithEmailAndPassword(email, password).then(() => {
+                navigate("/", { replace: true });
+                dispatch(
+                  openScackbar({
+                    open: true,
+                    type: "success",
+                    msg: "Login Complete",
+                  })
+                );
+              });
+            }}
             sx={{ mb: 2 }}
             variant="contained"
           >

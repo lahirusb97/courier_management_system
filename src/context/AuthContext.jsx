@@ -12,6 +12,7 @@ import {
 import { auth, firestore } from "../firebase";
 
 import { onAuthStateChanged } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 const UserContext = createContext();
 
 export const AuthContextprovider = ({ children }) => {
@@ -21,28 +22,24 @@ export const AuthContextprovider = ({ children }) => {
   const [copArray, setCopArray] = useState([]);
   const [branchArray, setBranchArray] = useState([]);
   const [copObj, setCopObj] = useState({});
+  const [user, loadingauth, errorauth] = useAuthState(auth);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const uid = user.uid;
-        const unsub = onSnapshot(
-          doc(firestore, "user", user.uid),
-          (doc) => {
-            setUserData({ ...doc.data(), id: uid }); // Update userData state
-            setLoading(false);
-          },
-          (error) => {
-            setError(true);
-            setLoading(false);
-          }
-        );
-      } else {
-        setLoading(false);
-        setUserData(null);
-      }
-    });
-  }, []);
+    if (user && !loadingauth) {
+      const uid = user.uid;
+      const unsub = onSnapshot(
+        doc(firestore, "user", user.uid),
+        (doc) => {
+          setUserData({ ...doc.data(), id: uid }); // Update userData state
+          setLoading(false);
+        },
+        (error) => {
+          setError(true);
+          setLoading(false);
+        }
+      );
+    }
+  }, [user]);
 
   useEffect(() => {
     if (userData) {
